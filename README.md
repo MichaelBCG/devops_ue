@@ -1,6 +1,10 @@
+# Fork Notes
+- **master** branch: Must not be modified. It must be in sync with the _upstream life-exe/devops_ue:master_ repo.
+- **my-master** branch: It is the main branch that can be modified. When life-exe's master branch is changed, the changes should be first synced with **master** branch, and then **master** branch should be merged into **my-master** branch resolving any conflicts.
+
 # Unreal Engine devops
 
-![alt text](https://github.com/life-exe/devops_ue/blob/master/assets/logo.png)
+![alt text](https://github.com/MichaelBCG/devops_ue/blob/master/assets/logo.png)
 
 This lightweight repository is a part of [Unreal Engine Automation and Testing course](https://youtube.com/playlist?list=PL2XQZYeh2Hh-PdSglBEm520Eboph1GcA2).
 You can use it with any Unreal Engine project to speed to up your development process.
@@ -25,7 +29,7 @@ Each subfolder of the current repo has an additional readme page for further inf
 * Add this repository as a submodule for your UE project:
 
 ```
-git submodule add https://github.com/life-exe/devops_ue
+git submodule add https://github.com/MichaelBCG/devops_ue
 ```
 
 * Launch following bat file inside **devops_ue** folder (you can skip the current step if you don't need docs generation):
