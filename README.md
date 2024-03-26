@@ -1,6 +1,6 @@
 # Fork Notes
 - **master** branch: Must not be modified. It must be in sync with the _upstream life-exe/devops_ue:master_ repo.
-- **my-master** branch: It is the main branch that can be modified. When life-exe's master branch is changed, the changes should be first synced with **master** branch, and then **master** branch should be merged into **my-master** branch resolving any conflicts.
+- **my-master** branch: It is the main branch that can be modified. When life-exe's **master** branch (upstream) is changed, the changes should be first synced with **master** branch, and then the **master** branch should be merged into **my-master** branch resolving any conflicts.
 
 # Unreal Engine devops
 
