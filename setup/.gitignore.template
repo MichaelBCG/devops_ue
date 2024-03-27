@@ -1,5 +1,6 @@
 .vs
 *.sln
+.vsconfig
 DerivedDataCache/
 Intermediate/
 Saved/
