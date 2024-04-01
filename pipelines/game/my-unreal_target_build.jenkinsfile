@@ -1,0 +1,104 @@
+/* This Jenkins Pipeline builds a UE game with target = Game. 
+For Target Client/Server include see "-server", "-client" and "-noclient" values for BUILD_FLAGS. Also remeber that Client/Server require InstalledBuild or UE sources   
+Notifications are sent to Discord
+*/
+
+pipeline {
+    agent {
+        node {
+            label ""
+            customWorkspace "$BUILD_DIR"
+        }
+    }
+
+    /* Adjust these parameters. You can use them with Environment Injector plugin (remove enclosing quotes in parameters' values) */
+    /* environment {
+        BUILD_DIR = 'c:\\JenkinsJobs\\TPS-target-pipeline' 
+        GIT_URL_GAME = 'https://github.com/life-exe/UnrealTPSGame' 
+        GIT_CREDENTIALS_ID_GAME = 'life-exe-github'
+        GIT_BRANCH_GAME = 'master'
+        GIT_CLONE_TIMEOUT_MIN = 60
+        UAT_PATH = 'C:\\Epic Games\\UE Binary\\UE_5.0\\Engine\\Build\\BatchFiles\\RunUAT.bat'
+        PROJECT_PATH = "$BUILD_DIR\\TPS.uproject"
+        // ARCHIVE_PATH = "c:\\JenkinsJobs\\Artifacts\\$JOB_NAME\\$BUILD_NUMBER"
+        ARCHIVE_PATH = "$BUILD_DIR\\Build"
+        BUILD_FLAGS = '-build -cook -package -stage -archive -pak -allmaps' // -server -client -noclient
+        DIR_TO_ZIP = "Build\\**\\*.*"
+        // SLACK_CHANNEL = 'tps-game-builds' // If using Discord, you don't need this parameter
+        PLATFORM_ID = 'Win64' // ['Android', 'Linux'..]
+        CLIENT_CONFIG = 'Development' // ['Development', 'Shipping', 'DebugGame']
+
+        // example of using parameters with Environment Injector plugin
+        BUILD_DIR = c:\\JenkinsJobs\\devops_ue_game-target-pipeline 
+        GIT_URL_GAME = https://github.com/UnrealTPSGameMBCG/UnrealTPSGame
+        GIT_CREDENTIALS_ID_GAME = MichaelBCG-github
+        GIT_BRANCH_GAME = master
+        GIT_CLONE_TIMEOUT_MIN = 120
+        UAT_PATH = C:\\Program Files\\Epic Games\\UE_5.3\\Engine\\Build\\BatchFiles\\RunUAT.bat
+        PROJECT_PATH = $BUILD_DIR/TPS.uproject
+        PLATFORM_ID = Win64
+        CLIENT_CONFIG = Development
+        ARCHIVE_PATH = $BUILD_DIR/Build
+        BUILD_FLAGS = -build -cook -package -stage -archive -pak -allmaps -noturnkeyvariables
+        DIR_TO_ZIP = Build\\**\\*.* 
+    }*/
+
+    stages {
+        stage('Git clone') {
+            steps {
+                discordSend description: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} started",  
+                    enableArtifactsList: false, 
+                    footer: '', 
+                    image: '', 
+                    link: env.BUILD_URL, 
+                    result: currentBuild.currentResult, 
+                    scmWebUrl: '', 
+                    thumbnail: '', 
+                    title: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER}", 
+                    webhookURL: 'https://discord.com/api/webhooks/1216203845550477332/i8zcv30vhaA_k67LyZlXlpZ4wByeSN2jyBmVe1FPX2kE44cRO-ctu_gYW_b6FbFUXfII'
+
+                checkout scmGit(
+                    branches: [[name: "$GIT_BRANCH_GAME"]], 
+                    extensions: [
+						cleanBeforeCheckout(), 
+						cloneOption(depth: 1, noTags: false, reference: '', shallow: true, timeout: "$GIT_CLONE_TIMEOUT_MIN"), 
+						checkoutOption("$GIT_CLONE_TIMEOUT_MIN")
+					], 
+                    userRemoteConfigs: [[credentialsId: "$GIT_CREDENTIALS_ID_GAME", 
+                    url: "$GIT_URL_GAME"]]
+                )
+            }    
+        }
+        stage('Build') {
+            steps {
+                bat '''
+                "%UAT_PATH%" BuildCookRun ^
+                -project="%PROJECT_PATH%" ^
+                -platform="%PLATFORM_ID%" ^
+                -clientconfig="%CLIENT_CONFIG%" ^
+                -archivedirectory="%ARCHIVE_PATH%" ^
+                %BUILD_FLAGS%
+                '''
+            }    
+        }
+        stage('Archive artifacts') {
+            steps {
+                archiveArtifacts artifacts: "$DIR_TO_ZIP"
+            }    
+        } 
+    }
+    post {
+        always {
+                discordSend description: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER} finished: $currentBuild.currentResult. Artifacts: ",  
+                    enableArtifactsList: true, 
+                    footer: '', 
+                    image: '', 
+                    link: "${env.BUILD_URL}/artifact/", 
+                    result: currentBuild.currentResult, 
+                    scmWebUrl: '', 
+                    thumbnail: '', 
+                    title: "Build ${env.JOB_NAME} #${env.BUILD_NUMBER}", 
+                    webhookURL: 'https://discord.com/api/webhooks/1216203845550477332/i8zcv30vhaA_k67LyZlXlpZ4wByeSN2jyBmVe1FPX2kE44cRO-ctu_gYW_b6FbFUXfII'
+        }
+    }
+}
