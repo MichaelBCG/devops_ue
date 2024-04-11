@@ -17,7 +17,7 @@ struct FAxisData
     FName Name; /**< The name of the axis. */
 
     UPROPERTY()
-    float Value; /**< The value of the axis. */
+    float Value = 0.0f; /**< The value of the axis. */
 };
 
 /**
@@ -35,7 +35,7 @@ struct FActionData
     FKey Key; /**< The key associated with the action. */
 
     UPROPERTY()
-    bool State; /**< The state of the action. */
+    bool State = false; /**< The state of the action. */
 };
 
 /**
@@ -53,7 +53,7 @@ struct FBindingsData
     TArray<FActionData> ActionValues; /**< The array of action values. */
 
     UPROPERTY()
-    float WorldTime{0.0f}; /**< The world time. */
+    float WorldTime = 0.0f; /**< The world time. */
 };
 
 /**
