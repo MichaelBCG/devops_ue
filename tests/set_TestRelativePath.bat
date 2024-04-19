@@ -10,6 +10,7 @@ echo In what directory do you want to create the test file(s)? The target direct
 echo Please note that OpenCppCoverage will exclude tests from the following path: [%ExcludedPathForTestReport%*]. 
 :change_TestRelativePath
 set /p ChangeDirChoice= "Do you want to change the target directory? [Y/N or (E)xit] :"
+set RETURNED_VALUE=
 if /i "%ChangeDirChoice%"=="Y" (
 	set /p TestRelativePath= "Enter the new relative to [Source\%ProjectPureName%] directory (use \ symbol for subdirs) :"
 ) else if /i "%ChangeDirChoice%"=="e" (
