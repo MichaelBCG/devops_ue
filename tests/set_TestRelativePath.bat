@@ -3,7 +3,7 @@
 @echo off
 
 rem This script is designed to be called from create_spec_file.bat and create_test_file.bat
-rem It sets TestRelativePath (relative path for saving the test files)
+rem It sets TestRelativePath (relative path for saving the test files) and ModuleName (equals to ProjectPureName or TestsModuleName depending on where test files are created)
 
 set ModuleName=%ProjectPureName%
 set UseTestsModule=FALSE
