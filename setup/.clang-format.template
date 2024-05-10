@@ -16,3 +16,5 @@ AllowShortCaseLabelsOnASingleLine: true
 IndentCaseLabels: true
 AlwaysBreakTemplateDeclarations: Yes
 AlignEscapedNewlines: Left
+MaxEmptyLinesToKeep: 2
+SeparateDefinitionBlocks : Leave
