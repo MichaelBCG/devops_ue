@@ -1,8 +1,11 @@
 # Fork Notes
-- **master** branch: Must not be modified. It must be in sync with the _upstream life-exe/devops_ue:master_ repo.
-- **my-master** branch: It is the main branch that can be modified. When life-exe's **master** branch (upstream) is changed, the changes should be first synced with **master** branch, and then the **master** branch should be merged into **my-master** branch resolving any conflicts.
+This fork was created to contribute to the original [life-exe/devops_ue](https://github.com/life-exe/devops_ue) repo.
 
-# Unreal Engine devops
+- **master** branch: Must not be modified. It must be in sync with the _upstream life-exe/devops_ue:master_ repo.
+- **my-master** branch: It is the main branch with my contributions. When life-exe's **master** branch (upstream) is changed, the changes should be first synced with **master** branch, and then the **master** branch should be merged into **my-master** branch resolving any conflicts.
+- Other branches are auxiliary.
+
+# Unreal Engine devops (Original repo notes)
 
 ![alt text](https://github.com/MichaelBCG/devops_ue/blob/master/assets/logo.png)
 
