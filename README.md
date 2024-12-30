@@ -3,7 +3,7 @@ This fork was created to contribute to the original [life-exe/devops_ue](https:/
 
 - **master** branch: Must not be modified. It must be in sync with the _upstream life-exe/devops_ue:master_ repo.
 - **my-master** branch: It is the main branch with my contributions. When life-exe's **master** branch (upstream) is changed, the changes should be first synced with **master** branch, and then the **master** branch should be merged into **my-master** branch resolving any conflicts.
-- Other branches are auxiliary.
+- Other branches are auxiliary for pull requests into the original repo.
 
 # Unreal Engine devops (Original repo notes)
 
